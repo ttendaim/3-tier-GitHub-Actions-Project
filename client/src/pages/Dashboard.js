@@ -1,5 +1,5 @@
 // src/pages/Dashboard.js
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import axios from '../axios';
 import { AuthContext } from '../context/AuthContext';
 
@@ -10,9 +10,9 @@ function Dashboard() {
 
   useEffect(() => {
     fetchUsers();
-  }, [token]);
+  }, [fetchUsers]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const res = await axios.get('/users', {
         headers: { Authorization: token },
@@ -21,7 +21,7 @@ function Dashboard() {
     } catch (err) {
       console.error('Fetch users failed:', err);
     }
-  };
+  }, [token]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

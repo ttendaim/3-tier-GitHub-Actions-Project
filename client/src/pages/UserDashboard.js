@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef, useCallback } from 'react';
 import axios from '../axios';
 import UserForm from '../components/UserForm';
 import { AuthContext } from '../context/AuthContext';
@@ -12,15 +12,7 @@ function UserDashboard() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    } else {
-      fetchUsers();
-    }
-  }, [user, navigate, fetchUsers]);
-
-  const fetchUsers = () => {
+  const fetchUsers = useCallback(() => {
     axios
       .get('/users') // ✅ Fixed
       .then(res => setUsers(res.data))
@@ -28,7 +20,15 @@ function UserDashboard() {
         console.error('Fetch Error:', err);
         if (err.response?.status === 401) logout();
       });
-  };
+  }, [logout]);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      fetchUsers();
+    }
+  }, [user, navigate, fetchUsers]);
 
   const handleCreate = (userData) => {
     axios
