@@ -22,12 +22,16 @@ jobs:
       with:
         node-version: "23"
 
-    - name: Install and Test Frontend
+    - name: Install and Test Frontend (with debug)
       run: |
         cd client
+        echo "Node version:" && node --version
+        echo "NPM version:" && npm --version
+        echo "Client package.json (first 200 lines):" && sed -n '1,200p' package.json || true
+        echo "Listing client/src (top entries):" && ls -la src | head -n 50 || true
         npm ci
         npm run build
-        CI=true npm test
+        CI=true npm test -- --runInBand --verbose
 
     - name: Install Backend
       run: |
