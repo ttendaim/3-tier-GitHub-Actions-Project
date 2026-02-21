@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  compile:
     runs-on: agent-1
 
     steps:
@@ -25,7 +25,7 @@ jobs:
     - name: Frontend Compilation (Syntax Check)
       run: |
           cd client
-          find . -name ".js" -exec node --check {} +
+          find . -name "*.js" -exec node --check {} +
 
     - name: Backend Compilation (Synatax Check)
       run: |
