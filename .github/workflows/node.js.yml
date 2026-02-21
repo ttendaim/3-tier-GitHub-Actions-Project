@@ -27,7 +27,7 @@ jobs:
         cd client
         npm ci
         npm run build
-        npm test
+        CI=true npm test
 
     - name: Install Backend
       run: |
