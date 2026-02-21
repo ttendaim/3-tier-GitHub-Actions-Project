@@ -18,7 +18,7 @@ function UserDashboard() {
     } else {
       fetchUsers();
     }
-  }, [user, navigate]);
+  }, [user, navigate, fetchUsers]);
 
   const fetchUsers = () => {
     axios

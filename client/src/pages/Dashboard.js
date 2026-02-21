@@ -10,7 +10,7 @@ function Dashboard() {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [token]);
 
   const fetchUsers = async () => {
     try {
