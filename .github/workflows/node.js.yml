@@ -11,7 +11,7 @@ on:
 
 jobs:
   compile:
-    runs-on: agent-1
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
