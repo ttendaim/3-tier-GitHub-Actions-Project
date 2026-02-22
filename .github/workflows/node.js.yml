@@ -102,7 +102,7 @@ jobs:
             -Dsonar.sources=.
             -Dsonar.test.exclusions=**/node_modules/**,**/dist/**,**/build/**
           env:
-            SONAR_TOKEN: ${{ secret.SONAR_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   SAST-backend-sonar-scanner:
@@ -124,7 +124,7 @@ jobs:
             -Dsonar.sources=.
             -Dsonar.test.exclusions=**/node_modules/**,**/dist/**,**/build/**
           env:
-            SONAR_TOKEN: ${{ secret.SONAR_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       
