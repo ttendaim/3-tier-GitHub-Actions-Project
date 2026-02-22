@@ -107,7 +107,7 @@ jobs:
 
   SAST-backend-sonar-scanner:
     runs-on: ubuntu-latest
-    needs: SAST-fonrtend-sonar-scanner
+    needs: SAST-frontend-sonar-scanner
 
     steps: 
       - name: Checkout code
