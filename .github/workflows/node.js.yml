@@ -64,7 +64,7 @@ jobs:
           gitleaks detect --source ./client --exit-code 1
           gitleaks detect --source ./api --exit-code 1
   
-  trivy-scan:
+  SCA-trivy-scan:
     runs-on: ubuntu-latest
     needs: gitleaks-scan
     
@@ -82,6 +82,50 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+  SAST-frontend-sonar-scanner:
+    runs-on: ubuntu-latest
+    needs: SCA-trivy-scan
+
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Frontend code scanning
+        uses: SonarSource/sonarqube-scan-action@<action version>
+        with:
+          projectBaseDir: client
+          args: >
+            -Dsonar.organization=myorg # For SonarQube Cloud only
+            -Dsonar.projectName=myorg_client
+            -Dsonar.projectKey=myorg_client
+            -Dsonar.sources=.
+            -Dsonar.test.exclusions=**/node_modules/**,**/dist/**,**/build/**
+          env:
+            SONAR_TOKEN: ${{ secret.SONAR_TOKEN }}
+            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  SAST-backend-sonar-scanner:
+    runs-on: ubuntu-latest
+    needs: SAST-fonrtend-sonar-scanner
+
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Backend code scanning
+        uses: SonarSource/sonarqube-scan-action@<action version>
+        with:
+          projectBaseDir: api
+          args: >
+            -Dsonar.organization=myorg # For SonarQube Cloud only
+            -Dsonar.projectName=myorg_api
+            -Dsonar.projectKey=myorg_api
+            -Dsonar.sources=.
+            -Dsonar.test.exclusions=**/node_modules/**,**/dist/**,**/build/**
+          env:
+            SONAR_TOKEN: ${{ secret.SONAR_TOKEN }}
+            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       
           
