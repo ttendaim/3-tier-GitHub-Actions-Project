@@ -96,7 +96,6 @@ jobs:
         with:
           projectBaseDir: client
           args: >
-            -Dsonar.organization=myorg # For SonarQube Cloud only
             -Dsonar.projectName=myorg_client
             -Dsonar.projectKey=myorg_client
             -Dsonar.sources=.
@@ -118,7 +117,6 @@ jobs:
         with:
           projectBaseDir: api
           args: >
-            -Dsonar.organization=myorg # For SonarQube Cloud only
             -Dsonar.projectName=myorg_api
             -Dsonar.projectKey=myorg_api
             -Dsonar.sources=.
